@@ -55,9 +55,6 @@ def populateDB(wordLength) :
     if len(w) == wordLength :
       if '\'' not in w :
         words.append(w.lower())
-  with open("new_words.txt", "w") as f :
-    for w in words :
-      f.write(w+"\n")
 
 def refreshBoxedWindow(window) :
   window.box()
