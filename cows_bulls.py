@@ -5,7 +5,7 @@
 # Author         : Dilawar Singh
 # Email          : dilawars@ncbs.res.in
 #
-# Description    : A kind of game.
+# Description    : A kind of game. 
 #
 # Logs           :
 
@@ -15,7 +15,10 @@ import cmd
 from random import choice
 import curses
 
+# global to keep all the words.
 words = []
+
+# initiate a curses screen and adds windows to it. 
 stdscr = curses.initscr()
 
 curses.start_color()
@@ -36,6 +39,7 @@ width, height = 40, 4
 errorWin = curses.newwin(height, width,  3, 0)
 tries = 0
 
+# And helper functions.
 def initWindow() :
   global stdscr
   global mainWin, msgWin
@@ -82,14 +86,26 @@ def printError(msg) :
   errorWin.getch()
 
 def cowsAndBull(word, correctWord) :
-  # bulls are no of letters on the same position in both words.
+  """
+  This is the core function which computes number of bulls and cows in two
+  words.
+  """
+  # better safe than sorry.
+  word.strip()
+  correctWord.strip()
+
+  # curses!
   global msgWin
   global mainWin 
-  global tries 
+
+  assert len(word) == 4
+  assert len(word) == len(correctWord)
+
   bullsChars = []
   bulls = 0
   cows = 0
-  for i in range(0, len(word)-1) :
+ 
+  for i in range(0, len(word)) :
     if word[i] == correctWord[i] :
       bulls += 1
       bullsChars.append(word[i])
@@ -132,7 +148,7 @@ if __name__ == "__main__" :
         curses.endwin()
         sys.exit()
       elif myWord != "????" :
-        printError("This is not a valid word. Guess again.")
+        printError("{0} is not in my dictionary!".format(myWord))
         continue
       else : continue 
     else :
